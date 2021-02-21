@@ -1,0 +1,10 @@
+{
+  "name": "ClickEveryHour2",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase": "^8.2.9",
+    "http": "0.0.1-security",
+    "jsdom": "^16.4.0",
+    "mysql": "^2.18.1"
+  }
+}
