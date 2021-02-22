@@ -15,14 +15,17 @@ const server = http.createServer((req, res) => {
     if (req.url === "/") {
         res.setHeader("Content-Type", "text/html");
         res.write(index);
+        res.end();
     }
     if (req.url === "/js/index.js") {
         res.setHeader("Content-Type", "text/javascript");
         res.write(java);
+        res.end();
     }
     if (req.url === "/css/style.css") {
         res.setHeader("Content-Type", "text/css");
         res.write(style);
+        res.end();
     }
     if (req.url === "/test") {
         res.setHeader("Content-Type", "application/json");
@@ -33,70 +36,30 @@ const server = http.createServer((req, res) => {
         //let dataTS = JSON.parse(data.toString());
         console.log(JSON.stringify(data));
         res.write(JSON.stringify(data));
+        res.end();
     }
-    if( req.url === "/newUser"){
+    if(req.url === "/newUser"){
         req.on('data', function (data){
             console.log('new user and dataJSONparese.name is:',JSON.parse(data).name);
             let newUsersName = JSON.parse(data).name;
-            addUserToDB(newUsersName, 0);
+            res.write(JSON.stringify(addUserToDB(newUsersName)));
+            res.end();
         })
     }
-    res.end();
+    if( req.url === "/login"){
+        req.on('data', function (data){
+            //TODO implement this function
+            let userName = JSON.parse(data).name;
+            let user = getUserFromDB(userName);
+            res.write(JSON.stringify(user));
+            res.end();
+        })
+    }
 })
 server.listen(port, () => {
     console.log(`Server running at port ${port}`)
 
 })
-
-/*
-let mysql      = require('mysql');
-let connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'password',
-    database: 'clickeveryhourDB', //make alternative code for if this doesn't exist
-    table: 'users'
-});
-
-connection.connect(function(err) {
-    if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-    }
-    console.log('connected as id ' + connection.threadId);
-    /*next lines will create a database, but this is already created
-    connection.query("CREATE DATABASE clickeveryhourDB", function (err, result) {
-        if (err) throw err;
-        console.log("Database created");
-    });
-    */
- /*
-    /* these lines will create a new table calle Users and then add an ID
-    let sql = "CREATE TABLE users (name VARCHAR(255), score INT)";
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("Table created");
-    });
-
-    let sql = "ALTER TABLE users ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY";
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("Table altered");
-    });
-     */
-/*
-});
-
-function addUser(name){
-        let sql = "INSERT INTO users (name, score) VALUES ('" + name + "', '0')";
-    connection.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("added user: " +name);
-    });
-}
-
-
- */
 
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
@@ -122,13 +85,37 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-function addUserToDB(name, score){
+function addUserToDB(name){
     firebase.database();
     //TODO invent smth for userID
-    userId = 0;
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        score: score
-    });
+    let userId = 3;
+    let user =  {
+        name: name,
+        score: 0,
+        lastPoint: null,
+        combo: null
+    };
+    firebase.database().ref('users/' + userId).set(user).then();
+    return user;
+}
 
+function getUserFromDB(userName){
+    let user = {
+        name: "No user found",
+        score: 0,
+        lastPoint: null,
+        combo: null
+    }
+    let users = firebase.database().ref("users/");
+    users.on('value', (snapchot)=>{
+        const  data = snapchot.val();
+        for(let i = 0; i< data.length; i++){
+            if(data[i].name === userName){
+                user= data[i];
+                console.log('user found in db: '+ JSON.stringify(data[i]));
+            }
+        }
+        console.log(data);
+    })
+    return user;
 }

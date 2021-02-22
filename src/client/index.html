@@ -18,40 +18,46 @@
 
 <div class="wrapper">
     <nav class="main-nav">
+
         <ul class="main-nav-list">
             <li class="main-nav-list-item" id="information-icon">
                 <i class="far fa-question-circle"></i>
             </li>
 
-            <li class="main-nav-list-item play-label" id="play-label">
-                <p>Play the game</p>
+            <li class="main-nav-list-item" id="tabs">
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event,'game')" id="defaultOpen">Game</button>
+                    <button class="tablinks" onclick="openTab(event,'highScore')">High scores</button>
+                </div>
             </li>
 
-            <li class="main-nav-list-item toggle-button" id="togle-button">
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </li>
-
-            <li class="main-nav-list-item score-label" id="score-label">
-                <p>Check the high scores</p>
-            </li>
-
-            <li class="main-nav-list-item" id="user-icon" onclick="addUserToDB()">
+            <li class="main-nav-list-item" id="user-icon" onclick="login()">
                 <i class="fas fa-user fa-2x"></i>
                 <p id="activeUser">Not logged in</p>
             </li>
         </ul>
     </nav>
+    <div class="tabcontent" id="game">
+        <section class="main-content" onclick="timeClicked()">
+            <p id="current_time" >Hang on, retrieving current time...</p>
+        </section>
+        <section class="score-content">
+            Your current score is:
+            <p id="score">0</p>
+        </section>
+    </div>
+    <div class="tabcontent" id="highScore">
+        This score list is fictional
+        <ul>
+            <li> Jos: 100</li>
+            <li> Fred: 41</li>
+            <li> Walti: 9 </li>
+        </ul>
+    </div>
 
-    <section class="main-content" onclick="timeClicked()">
-        <p id="current_time" >Hang on, retrieving current time...</p>
-    </section>
-    <section class="score-content">
-        Your current score is:
-        <p id="score">0</p>
-    </section>
+
+
+
 </div>
 
 </body>
