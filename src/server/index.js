@@ -56,6 +56,14 @@ const server = http.createServer((req, res) => {
             res.end();
         })
     }
+    if( req.url === "/addPoints"){
+        req.on('data', function (data){
+            let objectData = JSON.parse(data);
+            let updatedUser = addPoints(objectData);
+            res.write(JSON.stringify(updatedUser));
+            res.end();
+        })
+    }
 })
 server.listen(port, () => {
     console.log(`Server running at port ${port}`)
@@ -113,7 +121,7 @@ function addUserToDB(name){
         lastPoint: null,
         combo: null
     };
-    database.ref('users/' + newUserId).set(user).then();
+    database.ref('users/' + newUserId).set(user);
     return user;
 }
 
@@ -131,5 +139,12 @@ function getUserFromDB(userName){
             console.log('user found in db: '+ JSON.stringify(user));
         }
     }
+    return user;
+}
+
+function addPoints(user){
+    //TODO add bonusses
+    user.score++;
+    database.ref('users/' + user.userId).set(user);
     return user;
 }

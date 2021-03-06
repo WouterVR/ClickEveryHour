@@ -76,19 +76,23 @@ setInterval(function() {
  */
 function timeClicked() {
     if(validTimeToClick && !alreadyClickedThisHour){
-        score += 1;
+        let url = "/addPoints"
+        if(user.name ===""){
+            login();
+        }
+        $.post(url, JSON.stringify(user),function (data, status){
+            if(status ==="success") {
+                user = JSON.parse(data);
+                updateUserData();
+            } else {
+                console.error("Something went wrong updating the score!")
+            }
+        });
         alreadyClickedThisHour = true;
     }
-    document.getElementById('score').innerHTML = score;
-
+    updateUserData();
     console.log('Click');
-    let url = "/test"
-    $.get(url, function (data, status){
-        let parsedData = JSON.stringify(data);
-        console.log(`${parsedData} with status: ${status}`);
-    });
 }
-
 
 
 function login(){
