@@ -7,17 +7,19 @@ let user =  {
     lastPoint: null,
     combo: null
 }
-let score= 0; //TODO legacy, remove
+let score= 0; //TODO remove legacy
 
 $(document).ready(function (){
     $('#defaultOpen').click();
     let thisLocalStorage = window.localStorage;
-    if(user.userId === -1){
+    if(user.name === ""){
         user = thisLocalStorage.get('user');
+        updateUserData()
         alert('playing as '+user.name);
+    }else{
+        $("#activeUser").text("No user found");
+        $("#score").text("0");
     }
-    $("#activeUser").text("No user found");
-    $("#score").text("-1");
 });
 
 // Update the clock every 1 second
@@ -99,10 +101,10 @@ function login(){
         name: userName
     }
     let stringifiedData = JSON.stringify(data);
-    $.post(url, stringifiedData, function (data, status){
-        console.log("raw data from login post: "+data);
-        let returnedUserInfo = data;
-        console.log( status+', with data:  ' + returnedUserInfo+ " with name "+ returnedUserInfo["name"]);
+    $.post(url, stringifiedData, function (receivedData, status){
+        console.log("raw data from login post: "+receivedData);
+        let returnedUserInfo = JSON.parse(receivedData);
+        console.log( status+', with data:  ' + receivedData+ " with name "+ returnedUserInfo["name"]);
         if(returnedUserInfo.name ==="No user found"){
             if(window.confirm("There was no user found with username: "+ userName +"\\n"
         + "Do you want to create a new account with this username?\\n Cancel to try a new login")){
@@ -124,18 +126,19 @@ function addUserToDB(userName){
     }
     let stringifiedData = JSON.stringify(data);
     $.post(url, stringifiedData, function (data, status){
-       if(status === "success" && !JSON.stringify(data).includes("Error")){
-           user = JSON.stringify(data);
+       if(status === "success" && !data.includes("Error")){
+           user = JSON.parse(data);
            updateUserData();
        }else{
-           alert('Something went wrong creating new user: '+userName);
+           alert('Something went wrong with creating new user: '+userName);
        }
     });
 }
 
 function updateUserData() {
-    $("#activeUser").textContent = user.name;
-    $("#score").textContent = user.score;
+
+    $("#activeUser").text(user.name);
+    $("#score").text(user.score);
 }
 
 

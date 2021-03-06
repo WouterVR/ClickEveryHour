@@ -42,14 +42,15 @@ const server = http.createServer((req, res) => {
         req.on('data', function (data){
             console.log('new user and dataJSONparese.name is:',JSON.parse(data).name);
             let newUsersName = JSON.parse(data).name;
-            res.write(JSON.stringify(addUserToDB(newUsersName)));
+            let newUser = addUserToDB(newUsersName);
+            res.write(JSON.stringify(newUser));
             res.end();
         })
     }
     if( req.url === "/login"){
         req.on('data', function (data){
-            //TODO implement this function
-            let userName = JSON.parse(data).name;
+            let objectData = JSON.parse(data);
+            let userName = objectData.name;
             let user = getUserFromDB(userName);
             res.write(JSON.stringify(user));
             res.end();
@@ -83,39 +84,52 @@ let firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+let database = firebase.database();
 
+let currentUsersInDB = [];
+
+database.ref("users").on("value", function(snapshot) {
+    console.log(snapshot.val());
+    currentUsersInDB = snapshot.val();
+}, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
 
 function addUserToDB(name){
-    firebase.database();
-    //TODO invent smth for userID
-    let userId = 3;
+    //getting higest userId
+    let newUserId=0;
+    for(let userIdInList in currentUsersInDB){
+        if(userIdInList > newUserId) {
+            newUserId = userIdInList;
+            console.log("found a higher userId: "+ newUserId);
+        }
+    }
+    newUserId++;
+    console.log("new user id: "+newUserId);
     let user =  {
+        userId : newUserId,
         name: name,
         score: 0,
         lastPoint: null,
         combo: null
     };
-    firebase.database().ref('users/' + userId).set(user).then();
+    database.ref('users/' + newUserId).set(user).then();
     return user;
 }
 
 function getUserFromDB(userName){
     let user = {
         name: "No user found",
+        userId:-1,
         score: 0,
         lastPoint: null,
         combo: null
     }
-    let users = firebase.database().ref("users/");
-    users.on('value', (snapchot)=>{
-        const  data = snapchot.val();
-        for(let i = 0; i< data.length; i++){
-            if(data[i].name === userName){
-                user= data[i];
-                console.log('user found in db: '+ JSON.stringify(data[i]));
-            }
+    for(let userInUserlist in currentUsersInDB){
+        if(currentUsersInDB[userInUserlist].name === userName){
+            user= currentUsersInDB[userInUserlist];
+            console.log('user found in db: '+ JSON.stringify(user));
         }
-        console.log(data);
-    })
+    }
     return user;
 }
