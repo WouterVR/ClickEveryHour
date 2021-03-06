@@ -1,4 +1,3 @@
-
 let validTimeToClick = false;
 let alreadyClickedThisHour = false;
 let user =  {
@@ -7,20 +6,35 @@ let user =  {
     lastPoint: null,
     combo: null
 }
-let score= 0; //TODO remove legacy
-
+function pageLoaded(){
+    try {
+        $('#defaultOpen').click()
+    } catch (e){
+        console.error(e);
+        let thisLocalStorage = window.localStorage;
+        if(user.name === ""){
+            user = JSON.parse(thisLocalStorage.getItem('user'));
+            updateUserData()
+            alert('playing as '+user.name);
+        }else{
+            $("#activeUser").text("No user found");
+            $("#score").text("0");
+        }
+    }
+}
+/*
 $(document).ready(function (){
     $('#defaultOpen').click();
     let thisLocalStorage = window.localStorage;
     if(user.name === ""){
-        user = thisLocalStorage.get('user');
+        user = JSON.parse(thisLocalStorage.get('user'));
         updateUserData()
         alert('playing as '+user.name);
     }else{
         $("#activeUser").text("No user found");
         $("#score").text("0");
     }
-});
+});*/
 
 // Update the clock every 1 second
 setInterval(function() {
@@ -140,6 +154,9 @@ function addUserToDB(userName){
 }
 
 function updateUserData() {
+
+    let thisLocalStorage = window.localStorage;
+    thisLocalStorage.setItem("user", JSON.stringify(user));
 
     $("#activeUser").text(user.name);
     $("#score").text(user.score);

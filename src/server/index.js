@@ -1,7 +1,7 @@
 const http = require('http')
 
 //const port = process.env.PORT //not working?
-const port = 3000 //not working?
+const port = 3000
 
 // use createReadStream instead to save memory
 const fs = require('fs');
