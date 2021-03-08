@@ -6,6 +6,9 @@ let user =  {
     lastPoint: null,
     combo: null
 }
+
+mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+
 function pageLoaded(){
     try {
         $('#defaultOpen').click()
@@ -22,19 +25,6 @@ function pageLoaded(){
         }
     }
 }
-/*
-$(document).ready(function (){
-    $('#defaultOpen').click();
-    let thisLocalStorage = window.localStorage;
-    if(user.name === ""){
-        user = JSON.parse(thisLocalStorage.get('user'));
-        updateUserData()
-        alert('playing as '+user.name);
-    }else{
-        $("#activeUser").text("No user found");
-        $("#score").text("0");
-    }
-});*/
 
 // Update the clock every 1 second
 setInterval(function() {
