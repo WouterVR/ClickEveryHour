@@ -19,7 +19,29 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
 
-<div class="wrapper">
+<div class="wrapper" >
+    <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <span class="mdc-top-app-bar__title">Click Every Hour</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="star_rate">star_rate</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="account_circle">account_circle</button>
+                <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Info">info</button>
+            </section>
+        </div>
+    </header>
+    <main class="mdc-top-app-bar--fixed-adjust">
+        <section class="main-content" onclick="timeClicked()">
+            <p id="current_time" >Hang on, retrieving current time...</p>
+        </section>
+        <section class="score-content">
+            Your current score is:
+            <p id="score">0</p>
+        </section>
+    </main>
+
     <nav class="main-nav">
 
         <ul class="main-nav-list">
@@ -48,11 +70,11 @@
 
     <div class="tabcontent" id="game">
         <section class="main-content" onclick="timeClicked()">
-            <p id="current_time" >Hang on, retrieving current time...</p>
+            <p id="current_time2" >Hang on, retrieving current time...</p>
         </section>
         <section class="score-content">
             Your current score is:
-            <p id="score">0</p>
+            <p id="score2">0</p>
         </section>
     </div>
     <div class="tabcontent" id="highScore">
@@ -63,11 +85,6 @@
             <li> Walti: 9 </li>
         </ul>
     </div>
-
-
-
-
 </div>
-
 </body>
 </html>

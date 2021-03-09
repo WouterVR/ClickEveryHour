@@ -7,9 +7,23 @@ let user =  {
     combo: null
 }
 
-mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+
+import {MDCTopAppBar} from '@material/top-app-bar';
+import {MDCDialog} from '@material/dialog';
 
 function pageLoaded(){
+
+    const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+//@use "@material/dialog";
+
+//@include dialog.core-styles;
+// Instantiation
+    const topAppBarElement = document.querySelector('.mdc-top-app-bar');
+    const topAppBar = new MDCTopAppBar(topAppBarElement);
+//mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+
+
+
     try {
         $('#defaultOpen').click()
     } catch (e){
@@ -18,7 +32,6 @@ function pageLoaded(){
         if(user.name === ""){
             user = JSON.parse(thisLocalStorage.getItem('user'));
             updateUserData()
-            alert('playing as '+user.name);
         }else{
             $("#activeUser").text("No user found");
             $("#score").text("0");
