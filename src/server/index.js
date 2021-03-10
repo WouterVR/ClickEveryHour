@@ -7,6 +7,7 @@ const port = 3000
 const fs = require('fs');
 const index = fs.readFileSync('../client/index.html');
 const java = fs.readFileSync('../client/js/index.js');
+const layout = fs.readFileSync('../client/js/layout.js');
 const style = fs.readFileSync('../client/css/style.css');
 
 const server = http.createServer((req, res) => {
@@ -20,6 +21,11 @@ const server = http.createServer((req, res) => {
     if (req.url === "/js/index.js") {
         res.setHeader("Content-Type", "text/javascript");
         res.write(java);
+        res.end();
+    }
+    if (req.url === "/js/layout.js") {
+        res.setHeader("Content-Type", "text/javascript");
+        res.write(layout);
         res.end();
     }
     if (req.url === "/css/style.css") {

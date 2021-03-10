@@ -8,22 +8,7 @@ let user =  {
 }
 
 
-import {MDCTopAppBar} from '@material/top-app-bar';
-import {MDCDialog} from '@material/dialog';
-
 function pageLoaded(){
-
-    const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
-//@use "@material/dialog";
-
-//@include dialog.core-styles;
-// Instantiation
-    const topAppBarElement = document.querySelector('.mdc-top-app-bar');
-    const topAppBar = new MDCTopAppBar(topAppBarElement);
-//mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
-
-
-
     try {
         $('#defaultOpen').click()
     } catch (e){

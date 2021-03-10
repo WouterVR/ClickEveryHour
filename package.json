@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@material/dialog": "^10.0.0",
+    "@material/tooltip": "^10.0.0",
     "@material/top-app-bar": "^10.0.0",
     "firebase": "^8.2.9",
     "http": "0.0.1-security",
