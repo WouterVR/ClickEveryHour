@@ -9,6 +9,7 @@ const index = fs.readFileSync('../client/index.html');
 const java = fs.readFileSync('../client/js/index.js');
 const layout = fs.readFileSync('../client/js/layout.js');
 const style = fs.readFileSync('../client/css/style.css');
+const favicon = fs.readFileSync('../img/favicon/favicon.ico');
 
 const server = http.createServer((req, res) => {
     console.log(req);
@@ -31,6 +32,10 @@ const server = http.createServer((req, res) => {
     if (req.url === "/css/style.css") {
         res.setHeader("Content-Type", "text/css");
         res.write(style);
+        res.end();
+    }if (req.url === "/favicon.ico") {
+        res.setHeader("Content-Type", "image/ico");
+        res.write(favicon);
         res.end();
     }
     if (req.url === "/test") {

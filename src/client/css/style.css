@@ -7,6 +7,7 @@
     --dark: #333;
     --light: #fff;
     --shadow:0 1px 5px rgba(104, 104, 104, 0.8)
+
 }
 
 html {
@@ -21,8 +22,8 @@ html {
 body {
     width: 100%;
     background: var(--background);
-    margin: 20px;
     line-height: 1.4;
+    margin: 0;
 }
 
 .button {
@@ -67,111 +68,26 @@ body {
     flex-grow: 2;
 }
 
-/* Style the tab */
-.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-    background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-}
-.main-content {
-    padding: 10px;
-}
-
-/*******************************************/
-/* The switch - the box around the slider  */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 150px;
-    height: 0;
-}
-
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-input:checked + .slider {
-    background-color: #ccc;
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #ccc;
-}
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
 /************ Main content ****************/
 
 .main-content {
     text-align: center;
-    background-color: #439377;
+    color: var(--light);
+    padding: 10px;
+    font-size: xxx-large;
+    background-color: var(--primary);
+}
+.main-content:focus {
+    background-color: var(--secondary);
+    text-shadow: var(--shadow);
+}
+
+.mdc-top-app-bar--fixed-adjust {
+    font-family: Montserrat, Lekton, sans-serif;
+
+}
+
+.mdc-top-app-bar {
+    color: var(--primary);
+    background-color: var(--secondary);
 }

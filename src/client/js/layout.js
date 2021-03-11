@@ -9,6 +9,7 @@ const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
 // Instantiation
 const topAppBarElement = document.querySelector('.mdc-top-app-bar');
 const topAppBar = new MDCTopAppBar(topAppBarElement);
+topAppBar.setAttribute("color","#FFFF");
 //mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
 
 
