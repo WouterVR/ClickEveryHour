@@ -6,6 +6,9 @@ let user =  {
     lastPoint: null,
     combo: null
 }
+let users = [];
+
+
 function pageLoaded(){
     try {
         $('#defaultOpen').click()
@@ -15,26 +18,12 @@ function pageLoaded(){
         if(user.name === ""){
             user = JSON.parse(thisLocalStorage.getItem('user'));
             updateUserData()
-            alert('playing as '+user.name);
         }else{
             $("#activeUser").text("No user found");
             $("#score").text("0");
         }
     }
 }
-/*
-$(document).ready(function (){
-    $('#defaultOpen').click();
-    let thisLocalStorage = window.localStorage;
-    if(user.name === ""){
-        user = JSON.parse(thisLocalStorage.get('user'));
-        updateUserData()
-        alert('playing as '+user.name);
-    }else{
-        $("#activeUser").text("No user found");
-        $("#score").text("0");
-    }
-});*/
 
 // Update the clock every 1 second
 setInterval(function() {
@@ -102,6 +91,7 @@ function timeClicked() {
                 console.error("Something went wrong updating the score!")
             }
         });
+        confetti();
         alreadyClickedThisHour = true;
     }
     updateUserData();
@@ -114,6 +104,7 @@ function login(){
     //check if person exists
     // if it does not exits, make a pop up to ask to make a new account with this name
     // or log in with different username
+    if(userName === null) return;
     let url = "/login"
     let data = {
         name: userName
@@ -124,8 +115,9 @@ function login(){
         let returnedUserInfo = JSON.parse(receivedData);
         console.log( status+', with data:  ' + receivedData+ " with name "+ returnedUserInfo["name"]);
         if(returnedUserInfo.name ==="No user found"){
-            if(window.confirm("There was no user found with username: "+ userName +"\\n"
-        + "Do you want to create a new account with this username?\\n Cancel to try a new login")){
+            if(window.confirm("There was no user found with username: "+ userName +"\n"
+                + "Do you want to create a new account with this username?\n" +
+                "Cancel to try a new login")){
                 addUserToDB(userName);
             }else{ //Trying to login again
                 login();
@@ -185,3 +177,50 @@ function openTab(evt, chosenTab) {
     evt.currentTarget.className += " active";
 }
 
+
+
+
+function updateHighScoreList(){
+    let url = "/highScore";
+    $.post(url, JSON.stringify(users), function (data, status){
+        if(status === "success"){
+            users = JSON.parse(data);
+            console.log('lets go: '+ JSON.stringify(users));
+            users.sort((a, b) => (a.score > b.score) ? -1 : 1);
+            console.log('Sorted list: '+ JSON.stringify(users));
+            fillHTMLList()
+        }else{
+            alert('Something went wrong with receiving the userlist');
+        }
+    });
+
+}
+
+function fillHTMLList(){
+    let table = $('#highScoreList');
+    if(table !== undefined) table.empty();
+
+    let amountOfUsers = users.length;
+    if(amountOfUsers > 10) amountOfUsers = 11;
+    for(let i = 0; i < amountOfUsers; i++) {
+        let row = document.createElement('tr');
+
+        let collum1 = document.createElement('td');
+        let ranking = i+1;
+        collum1.append(document.createTextNode(ranking + "."));
+        row.append(collum1);
+
+        let collum2 = document.createElement('td');
+        collum2.style.textAlign = "left";
+        collum2.append(document.createTextNode(users[i].name));
+
+        let collum3 = document.createElement('td');
+        collum3.style.textAlign = "right";
+        collum3.append(document.createTextNode(users[i].score));
+
+        row.append(collum1);
+        row.append(collum2);
+        row.append(collum3);
+        table.append(row);
+    }
+}
