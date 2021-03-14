@@ -1,4 +1,5 @@
 const http = require('http')
+let path = require('path')
 
 //const port = process.env.PORT //not working?
 const port = 3000
@@ -9,10 +10,10 @@ const index = fs.readFileSync('../client/index.html');
 const java = fs.readFileSync('../client/js/index.js');
 const layout = fs.readFileSync('../client/js/layout.js');
 const style = fs.readFileSync('../client/css/style.css');
-const favicon = fs.readFileSync('../img/favicon/favicon.ico');
+const faviconPng = fs.readFileSync(path.join(__dirname, 'favicon', 'favicon2.png'));
 
 const server = http.createServer((req, res) => {
-    console.log(req);
+    console.log("New http request with url: " + req.url);
     res.statusCode = 200
     if (req.url === "/") {
         res.setHeader("Content-Type", "text/html");
@@ -33,9 +34,10 @@ const server = http.createServer((req, res) => {
         res.setHeader("Content-Type", "text/css");
         res.write(style);
         res.end();
-    }if (req.url === "/favicon.ico") {
-        res.setHeader("Content-Type", "image/ico");
-        res.write(favicon);
+    }
+    if (req.url === "/favicon.ico") {
+        res.setHeader("Content-Type", "image/png");
+        res.write(faviconPng);
         res.end();
     }
     if (req.url === "/test") {
@@ -44,7 +46,6 @@ const server = http.createServer((req, res) => {
             name: 'walti',
             score: 2
         }
-        //let dataTS = JSON.parse(data.toString());
         console.log(JSON.stringify(data));
         res.write(JSON.stringify(data));
         res.end();
@@ -75,7 +76,14 @@ const server = http.createServer((req, res) => {
             res.end();
         })
     }
+    if( req.url === "/highScore"){
+        req.on('data', function (data){
+            res.write(JSON.stringify(currentUsersInDB));
+            res.end();
+        })
+    }
 })
+
 server.listen(port, () => {
     console.log(`Server running at port ${port}`)
 

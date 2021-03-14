@@ -8,11 +8,13 @@
     "@material/dialog": "^10.0.0",
     "@material/tooltip": "^10.0.0",
     "@material/top-app-bar": "^10.0.0",
+    "canvas-confetti": "^1.4.0",
     "firebase": "^8.2.9",
     "http": "0.0.1-security",
     "jsdom": "^16.4.0",
     "material-components-web": "^10.0.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "css-loader": "^5.1.1",

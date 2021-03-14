@@ -6,7 +6,8 @@
     --background: #ffffff;
     --dark: #333;
     --light: #fff;
-    --shadow:0 1px 5px rgba(104, 104, 104, 0.8)
+    --text_shadow: 0 0 3px rgba(104, 104, 104, 0.8);
+    --box_shadow: 0 1px 10px rgba(104, 104, 104, 0.8);
 
 }
 
@@ -42,11 +43,6 @@ body {
     grid-gap: 5px;
 }
 
-
-.main-nav {
-    text-align: center;
-}
-
 .main-nav-list{
     display: flex;
     padding-left: 0;
@@ -60,34 +56,57 @@ body {
     flex-grow: 1;
 }
 
-.toggle-button {
-    flex-grow: 0.5;
-}
-
-.play-label {
-    flex-grow: 2;
-}
-
 /************ Main content ****************/
 
 .main-content {
-    text-align: center;
-    color: var(--light);
-    padding: 10px;
-    font-size: xxx-large;
-    background-color: var(--primary);
+    align-content: center;
+    background-color: white;
 }
 .main-content:focus {
     background-color: var(--secondary);
-    text-shadow: var(--shadow);
+    text-shadow: var(--text_shadow);
+}
+.time-button {
+    border-radius: 25px;
+    text-align: center;
+    color: var(--light);
+    padding: 10px;
+    margin: 5px;
+    size: auto;
+    font-size: xxx-large;
+    background-color: var(--secondary);
+}
+.time-button:active {
+    box-shadow: var(--box_shadow);
+    text-shadow: var(--text_shadow);
+ }
+
+.score-content {
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    size: auto;
+    font-size: xxx-large;
+    background-color: white;
+}
+
+#highScore {
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    size: auto;
+    font-size: xxx-large;
+    background-color: white;
+}
+#highScoreList {
+    font-size: x-large;
+    width: 100%;
 }
 
 .mdc-top-app-bar--fixed-adjust {
     font-family: Montserrat, Lekton, sans-serif;
-
 }
 
-.mdc-top-app-bar {
-    color: var(--primary);
-    background-color: var(--secondary);
+.mdc-top-app-bar__row {
+    background-color: var(--primary);
 }
