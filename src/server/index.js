@@ -2,7 +2,7 @@ const http = require('http')
 let path = require('path')
 
 //const port = process.env.PORT //not working?
-const port = 3000
+const port = process.env.PORT || 3000;
 
 // use createReadStream instead to save memory
 const fs = require('fs');
