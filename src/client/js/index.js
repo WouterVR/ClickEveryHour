@@ -11,7 +11,7 @@ let users = [];
 
 function pageLoaded(){
     try {
-        $('#defaultOpen').click()
+        toggleTabs();
     } catch (e){
         console.error(e);
         let thisLocalStorage = window.localStorage;
@@ -158,24 +158,37 @@ function updateUserData() {
 //Tab layout
 function openTab(evt, chosenTab) {
     // Declare all variables
-    let i, tabcontent, tablinks;
+    let i, tabcontent;
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
+    // Show the current tab
     document.getElementById(chosenTab).style.display = "block";
-    evt.currentTarget.className += " active";
 }
+
+let activeTab = "highScore";
+//Tab layout
+function toggleTabs() {
+    // Declare all variables
+    let inactiveTab;
+
+    if(activeTab === "game"){
+        inactiveTab = activeTab;
+        activeTab = "highScore";
+    }else if(activeTab === "highScore"){
+        inactiveTab= activeTab;
+        activeTab = "game";
+    }else {
+        console.error('Something went wrong with changing the tabs')
+    }
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(activeTab).style.display = "block";
+    document.getElementById(inactiveTab).style.display = "none";
+}
+
 
 
 
@@ -190,7 +203,7 @@ function updateHighScoreList(){
             console.log('Sorted list: '+ JSON.stringify(users));
             fillHTMLList()
         }else{
-            alert('Something went wrong with receiving the userlist');
+            console.log('Something went wrong with receiving the userlist');
         }
     });
 
@@ -223,4 +236,11 @@ function fillHTMLList(){
         row.append(collum3);
         table.append(row);
     }
+}
+
+function getInformation(){
+    alert("Welcome to 'Click Every Hour'! A fun little game to pass time.\n" +
+        "Click the time within the first minute of every hour to gain points. \n" +
+        "Log in by clicking the profile button: just chose a unique username and you are ready to go!\n" +
+        "Have fun xx\n");
 }

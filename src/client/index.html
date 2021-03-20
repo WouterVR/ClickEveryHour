@@ -31,19 +31,19 @@
     <header class="mdc-top-app-bar">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                <span class="mdc-top-app-bar__title" onclick="openTab(event,'game')" id="defaultOpen">Click Every Hour</span>
+                <span class="mdc-top-app-bar__title" onclick="toggleTabs()" id="defaultOpen">Click Every Hour</span>
             </section>
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
                 <ul class="main-nav-list">
                     <li class="main-nav-list-item" id="highScore-icon">
-                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" onclick="updateHighScoreList(); openTab(event,'highScore');" aria-label="star_rate">star_rate</button>
+                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" onclick="updateHighScoreList(); toggleTabs();" aria-label="star_rate">star_rate</button>
                     </li>
                     <li class="main-nav-list-item" id="user-icon" onclick="login()">
                         <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="account_circle"
                                 data-tooltip-id="user-icon-tooltip">account_circle</button>
                     </li>
                     <li class="main-nav-list-item" id="information">
-                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Info">info</button>
+                        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Info" onclick="getInformation()">info</button>
                     </li>
 
 
